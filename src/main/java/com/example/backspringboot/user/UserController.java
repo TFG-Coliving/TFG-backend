@@ -58,6 +58,8 @@ public class UserController {
             User user = userService.getCurrentUser();
             ImageData image = user.getProfilePicture();
             ImageData newImage = imageService.updateImage(file, image);
+            user.setProfilePicture(newImage);
+            userService.saveUser(user);
 
             return ResponseEntity.ok(newImage);
         } catch (IOException ignore) {
