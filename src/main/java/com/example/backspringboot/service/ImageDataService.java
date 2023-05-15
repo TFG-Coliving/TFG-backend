@@ -19,6 +19,10 @@ public class ImageDataService {
     private final String FOLDER_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" +
             File.separator + "resources" + File.separator + "static" + File.separator + "images" + File.separator;
 
+    public Optional<ImageData> getImageById(Long id) {
+        return repository.findById(id);
+    }
+
     public ImageData uploadImage(MultipartFile file) throws IOException {
         StringBuilder filename = new StringBuilder(Objects.requireNonNull(file.getOriginalFilename()).replaceAll(" ", "_"));
         String filePath = FOLDER_PATH + filename;

@@ -122,4 +122,27 @@ public class PropertyController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/image/{id}")
+    public ResponseEntity<ImageData> changePropertyImage(@RequestParam("images") MultipartFile file, @PathVariable("id") Long id) {
+        try {
+            Optional<ImageData> optImage = imageService.getImageById(id);
+            if(optImage.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            ImageData imageData = optImage.get();
+            ImageData image = imageService.updateImage(file, imageData);
+            return ResponseEntity.ok(image);
+        } catch (Exception e) {
+            System.err.println(e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/image/{id}")
+    public ResponseEntity<ImageData> deletePropertyImage(@PathVariable("id") Long id) {
+        imageService.deleteImage(id);
+        return ResponseEntity.ok().build();
+    }
 }
