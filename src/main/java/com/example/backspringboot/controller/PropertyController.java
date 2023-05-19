@@ -47,12 +47,16 @@ public class PropertyController {
             User currentUser = userService.getCurrentUser();
             property.setOwner(currentUser);
             property.setScore(0);
+            property.setCoordinates_lat_north(41.39);
+            property.setCoordinates_long_east(2.153889);
             Collection<ImageData> imageDataList = new ArrayList<>();
             if(files.isPresent()) {
                 for(MultipartFile file : files.get()) {
                     ImageData imageData = imageService.uploadImage(file);
                     imageDataList.add(imageData);
                 }
+            } else {
+                imageDataList.add(imageService.createDefaultPropertyImage());
             }
             property.setImages(imageDataList);
             propertyService.saveProperty(property);

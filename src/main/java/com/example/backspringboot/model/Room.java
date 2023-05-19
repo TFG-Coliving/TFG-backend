@@ -30,4 +30,8 @@ public class Room {
     @OneToMany
     @JoinColumn(name = "room_id")
     private Collection<Bid> bids;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rent_id")
+    private Collection<Rent> rents;
 }

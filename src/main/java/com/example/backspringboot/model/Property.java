@@ -24,7 +24,6 @@ public class Property {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
@@ -36,9 +35,9 @@ public class Property {
     @Column(nullable = false)
     private String address;
     //@Column(nullable = false)
-    private double coordinates_long_north;
+    private double coordinates_lat_north;
     //@Column(nullable = false)
-    private double coordinates_latitude_east;
+    private double coordinates_long_east;
     @Column(nullable = false)
     private double score;
     @Column(nullable = false)

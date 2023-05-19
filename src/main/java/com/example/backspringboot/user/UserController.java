@@ -62,7 +62,8 @@ public class UserController {
             userService.saveUser(user);
 
             return ResponseEntity.ok(newImage);
-        } catch (IOException ignore) {
+        } catch (Exception ignore) {
+            System.err.println(ignore);
             return ResponseEntity.badRequest().build();
         }
     }

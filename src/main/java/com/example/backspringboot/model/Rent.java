@@ -23,9 +23,6 @@ public class Rent {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
-    @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
-    private Room room;
     @Column(nullable = false)
     private double price;
     @Column(nullable = false)

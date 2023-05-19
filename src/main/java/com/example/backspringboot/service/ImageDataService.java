@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ public class ImageDataService {
     private ImageDataRepository repository;
     private final String FOLDER_PATH = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" +
             File.separator + "resources" + File.separator + "static" + File.separator + "images" + File.separator;
+
+    private final String URI_PATH = "/static/images/";
 
     public Optional<ImageData> getImageById(Long id) {
         return repository.findById(id);
@@ -37,6 +40,7 @@ public class ImageDataService {
         ImageData imageData = ImageData.builder()
                 .name(filename.toString())
                 .type(file.getContentType())
+                .uri(URI_PATH + filename)
                 .path(filePath)
                 .build();
 
@@ -57,7 +61,7 @@ public class ImageDataService {
             tempFile = new File(filePath);
         }
 
-        if(!imageData.getName().equals("default_profile_picture")) {
+        if(!imageData.getName().equals("default_profile_picture.png")) {
             File image = new File(imageData.getPath());
             image.delete();
         }
@@ -65,7 +69,6 @@ public class ImageDataService {
         imageData.setName(filename.toString());
         imageData.setPath(filePath);
         imageData.setType(file.getContentType());
-        String URI_PATH = "/static/images/";
         imageData.setUri(URI_PATH + filename);
 
         repository.save(imageData);
@@ -83,5 +86,14 @@ public class ImageDataService {
         File image = new File(path);
         image.delete();
         repository.deleteById(id);
+    }
+
+    public ImageData createDefaultPropertyImage() {
+        return ImageData.builder()
+                .name("house-icon.jpg")
+                .type("image/jpeg")
+                .uri(URI_PATH + "house-icon.jpg")
+                .path(FOLDER_PATH + "house-icon.jpg")
+                .build();
     }
 }
