@@ -10,6 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +43,11 @@ public class RentController {
             rent.setUser(currentUser);
             Room room = optRoom.get();
             room.getRents().add(rent);
+            rent.setPrice(room.getPrice());
+            LocalDateTime localDateTime = LocalDateTime.now();
+            ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+            Instant instant = zonedDateTime.toInstant();
+            rent.setBooking_date(Date.from(instant));
             roomService.save(room);
             return ResponseEntity.ok(rent);
         } catch (Exception ignore) {
